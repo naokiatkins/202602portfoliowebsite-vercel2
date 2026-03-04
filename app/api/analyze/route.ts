@@ -17,6 +17,7 @@ Core skills:
 - Software design, Software architecture
 
 Industries: Finance, Manufacturing
+Work style: remote-first, async, startup environments
 
 Highlights:
 - Led re-architecture of a payments platform processing $2M/day

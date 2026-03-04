@@ -21,10 +21,10 @@ export default function HeroSection() {
           style={{ animationDelay: "0.2s", opacity: 0 }}
         >
           <h1 className="font-display text-6xl md:text-8xl text-ink leading-[1.05] mb-6">
-            Your Name.
+            Naoki Atkins.
             <br />
-            <em className="text-rust">Engineer</em>
-            <br />& builder.
+            <em className="text-rust">Data Engineer</em>
+            <br />& Business Intelligence Developer.
           </h1>
         </div>
 
@@ -40,7 +40,7 @@ export default function HeroSection() {
           </a>
           <div className="flex gap-6 font-mono text-xs text-muted">
             <a
-              href="https://github.com/yourusername"
+              href="https://github.com/naokiatkins"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-ink transition-colors"
@@ -48,7 +48,7 @@ export default function HeroSection() {
               GitHub
             </a>
             <a
-              href="https://linkedin.com/in/yourusername"
+              href="https://www.linkedin.com/in/naoki-atkins/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-ink transition-colors"

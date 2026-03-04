@@ -1,6 +1,6 @@
 export default function AboutSection() {
   const stats = [
-    { value: "6", label: "Years exp." },
+    { value: "5", label: "Years exp." },
     { value: "3", label: "Products shipped 0→1" },
     { value: "2k+", label: "GitHub stars" },
     { value: "12", label: "Countries worked across" },
