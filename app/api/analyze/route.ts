@@ -6,18 +6,17 @@ export const maxDuration = 30;
 
 // ─── Your profile — edit this! ──────────────────────────────────────────────
 const MY_PROFILE = `
-Name: Your Name
-Title: Senior Full-Stack Engineer / Product Engineer
-Years of experience: 6
+Name: Naoki Atkins
+Title: Senior Business Intelligence Developer / Data Engineer
+Years of experience: 5
 
 Core skills:
-- TypeScript, React, Next.js, Node.js
-- Python, FastAPI, PostgreSQL, Redis
-- AWS (Lambda, RDS, S3), Vercel, Docker
-- Product thinking, design systems, Figma
+- Power BI, Python, R, SQL
+- Azure -> Blob Storage, Functions, Apps
+- RPA, Machine Learning
+- Software design, Software architecture
 
-Industries: SaaS, fintech, developer tools
-Work style: remote-first, async, startup environments
+Industries: Finance, Manufacturing
 
 Highlights:
 - Led re-architecture of a payments platform processing $2M/day
