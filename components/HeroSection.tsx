@@ -23,8 +23,13 @@ export default function HeroSection() {
           <h1 className="font-display text-6xl md:text-8xl text-ink leading-[1.05] mb-6">
             Naoki Atkins.
             <br />
-            <em className="text-rust">Data Engineer</em>
-            <br />& Business Intelligence Developer.
+            <em className="text-rust">Data Professional</em>
+            <br>
+              <h2>
+                Data Engineer & Business Intelligence Developer
+              </h2>            
+            </br>
+            {/* <br />& Business Intelligence Developer. */}
           </h1>
         </div>
 
