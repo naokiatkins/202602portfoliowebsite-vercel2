@@ -24,10 +24,6 @@ export default function HeroSection() {
             Naoki Atkins.
             <br />
             <em className="text-rust">Data Professional</em>
-            </br>
-              <h2>
-                Data Engineer & Business Intelligence Developer
-              </h2>            
             <br />& Business Intelligence Developer.
           </h1>
         </div>
