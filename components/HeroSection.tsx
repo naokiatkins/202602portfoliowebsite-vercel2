@@ -24,12 +24,11 @@ export default function HeroSection() {
             Naoki Atkins.
             <br />
             <em className="text-rust">Data Professional</em>
-            <br>
+            </br>
               <h2>
                 Data Engineer & Business Intelligence Developer
               </h2>            
-            </br>
-            {/* <br />& Business Intelligence Developer. */}
+            <br />& Business Intelligence Developer.
           </h1>
         </div>
 
