@@ -55,7 +55,7 @@ export default function Home() {
 
       <footer className="border-t border-ink/10 py-8 px-6 text-center">
         <p className="font-mono text-xs text-muted">
-          © {new Date().getFullYear()} Your Name
+          © {new Date().getFullYear()} Naoki Atkins
         </p>
       </footer>
     </main>
