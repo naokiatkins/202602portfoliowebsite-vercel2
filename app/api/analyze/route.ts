@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { put } from "@vercel/blob";
-import { sql } from "@vercel/postgres";
+// import { sql } from "@vercel/postgres";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
@@ -164,31 +164,31 @@ const parsed = {
 // ────────────────────────────────────────────────────────────────────
 
     // ── 5. Persist to Vercel Postgres ─────────────────────────────────────────
-    await sql`
-      INSERT INTO jd_submissions (
-        filename,
-        blob_url,
-        extracted_text,
-        score,
-        summary,
-        matched_skills,
-        gaps,
-        ip_address,
-        user_agent,
-        submitted_at
-      ) VALUES (
-        ${file.name},
-        ${blob.url},
-        ${jdText.slice(0, 10000)},
-        ${score},
-        ${parsed.summary ?? ""},
-        ${JSON.stringify(parsed.matchedSkills ?? [])},
-        ${JSON.stringify(parsed.gaps ?? [])},
-        ${ip},
-        ${userAgent},
-        NOW()
-      )
-    `;
+    // await sql`
+    //   INSERT INTO jd_submissions (
+    //     filename,
+    //     blob_url,
+    //     extracted_text,
+    //     score,
+    //     summary,
+    //     matched_skills,
+    //     gaps,
+    //     ip_address,
+    //     user_agent,
+    //     submitted_at
+    //   ) VALUES (
+    //     ${file.name},
+    //     ${blob.url},
+    //     ${jdText.slice(0, 10000)},
+    //     ${score},
+    //     ${parsed.summary ?? ""},
+    //     ${JSON.stringify(parsed.matchedSkills ?? [])},
+    //     ${JSON.stringify(parsed.gaps ?? [])},
+    //     ${ip},
+    //     ${userAgent},
+    //     NOW()
+    //   )
+    // `;
 
     return NextResponse.json({
       score,
