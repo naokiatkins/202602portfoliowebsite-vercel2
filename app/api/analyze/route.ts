@@ -100,57 +100,68 @@ export async function POST(req: NextRequest) {
     const userAgent = req.headers.get("user-agent") ?? "unknown";
 
     // ── 4. Call Claude to score the match ─────────────────────────────────────
-    const message = await client.messages.create({
-      model: "claude-haiku-4-5-20251001",
-      max_tokens: 600,
-      messages: [
-        {
-          role: "user",
-          content: `You are an expert recruiter and career coach. Analyse the fit between a candidate profile and a job description.
+//     const message = await client.messages.create({
+//       model: "claude-haiku-4-5-20251001",
+//       max_tokens: 600,
+//       messages: [
+//         {
+//           role: "user",
+//           content: `You are an expert recruiter and career coach. Analyse the fit between a candidate profile and a job description.
 
-<candidate_profile>
-${MY_PROFILE}
-</candidate_profile>
+// <candidate_profile>
+// ${MY_PROFILE}
+// </candidate_profile>
 
-<job_description>
-${truncatedJD}
-</job_description>
+// <job_description>
+// ${truncatedJD}
+// </job_description>
 
-Respond with ONLY a valid JSON object — no markdown, no explanation:
-{
-  "score": <integer 0-100>,
-  "summary": "<2-sentence honest assessment of the fit>",
-  "matchedSkills": ["<skill>", ...],
-  "gaps": ["<gap or concern>", ...]
-}
+// Respond with ONLY a valid JSON object — no markdown, no explanation:
+// {
+//   "score": <integer 0-100>,
+//   "summary": "<2-sentence honest assessment of the fit>",
+//   "matchedSkills": ["<skill>", ...],
+//   "gaps": ["<gap or concern>", ...]
+// }
 
-Be objective. score=100 means perfect fit. score<50 means poor fit. score>=70 means worth a conversation.`,
-        },
-      ],
-    });
+// Be objective. score=100 means perfect fit. score<50 means poor fit. score>=70 means worth a conversation.`,
+//         },
+//       ],
+//     });
 
-    const rawText =
-      message.content[0].type === "text" ? message.content[0].text : "";
+//     const rawText =
+//       message.content[0].type === "text" ? message.content[0].text : "";
 
-    let parsed: {
-      score: number;
-      summary: string;
-      matchedSkills: string[];
-      gaps: string[];
-    };
+//     let parsed: {
+//       score: number;
+//       summary: string;
+//       matchedSkills: string[];
+//       gaps: string[];
+//     };
 
-    try {
-      const clean = rawText.replace(/```json|```/g, "").trim();
-      parsed = JSON.parse(clean);
-    } catch {
-      console.error("Claude response was not valid JSON:", rawText);
-      return NextResponse.json(
-        { error: "Analysis failed. Please try again." },
-        { status: 500 }
-      );
-    }
+//     try {
+//       const clean = rawText.replace(/```json|```/g, "").trim();
+//       parsed = JSON.parse(clean);
+//     } catch {
+//       console.error("Claude response was not valid JSON:", rawText);
+//       return NextResponse.json(
+//         { error: "Analysis failed. Please try again." },
+//         { status: 500 }
+//       );
+//     }
 
-    const score = Math.min(100, Math.max(0, Math.round(parsed.score)));
+//     const score = Math.min(100, Math.max(0, Math.round(parsed.score)));
+
+
+
+// ── TEMPORARY: hardcoded result for testing ──────────────────────────
+const score = 85;
+const parsed = {
+  summary: "This is a placeholder result for testing purposes.",
+  matchedSkills: ["TypeScript", "React", "Node.js"],
+  gaps: [],
+};
+// ────────────────────────────────────────────────────────────────────
 
     // ── 5. Persist to Vercel Postgres ─────────────────────────────────────────
     await sql`
