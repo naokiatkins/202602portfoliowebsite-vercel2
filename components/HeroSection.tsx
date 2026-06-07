@@ -21,10 +21,9 @@ export default function HeroSection() {
           style={{ animationDelay: "0.2s", opacity: 0 }}
         >
           <h1 className="font-display text-6xl md:text-8xl text-ink leading-[1.05] mb-6">
-            Naoki Atkins. (Still working on the website - Writing in progress)
+            Naoki Atkins.
             <br />
             <em className="text-rust">Data Engineer</em>
-            <br />& Business Intelligence Developer.
           </h1>
         </div>
 

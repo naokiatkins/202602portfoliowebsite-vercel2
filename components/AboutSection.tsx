@@ -1,9 +1,9 @@
 export default function AboutSection() {
   const stats = [
     { value: "5", label: "Years exp." },
-    { value: "3", label: "Products shipped 0→1" },
-    { value: "2k+", label: "GitHub stars" },
-    { value: "12", label: "Countries worked across" },
+    { value: "30+", label: "Reports maintained" },
+    { value: "5+", label: "Data pipelines built" },
+    { value: "2", label: "Languages; English and Japanese" },
   ];
 
   return (
@@ -17,11 +17,11 @@ export default function AboutSection() {
             I build products people actually want to use.
           </p>
           <p className="text-muted leading-relaxed mb-4">
-            Six years in, I&apos;ve worked across early-stage startups and
-            scale-ups — owning full product surfaces from design to deployment.
+            Five years in, I&apos;ve worked with the titles of business intelligence developer, 
+            to data engineer - and I am always striving to learn more and level up.
           </p>
           <p className="text-muted leading-relaxed">
-            My stack centres on TypeScript, React and Node.js. I care equally
+            My stack centres on Python, SQL, and Power BI. I care equally
             about code quality and the humans who use what I ship.
           </p>
         </div>
