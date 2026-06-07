@@ -7,7 +7,7 @@ export const maxDuration = 30;
 // ─── Your profile — edit this! ──────────────────────────────────────────────
 const MY_PROFILE = `
 Name: Naoki Atkins
-Title: Senior Business Intelligence Developer / Data Engineer
+Title: Data Engineer & Business Intelligence Developer
 Years of experience: 5
 
 Core skills:
@@ -20,10 +20,10 @@ Industries: Finance, Manufacturing
 Work style: remote-first, async, startup environments
 
 Highlights:
-- Led re-architecture of a payments platform processing $2M/day
-- Built and shipped 3 B2B SaaS products from 0→1
-- Open-source contributor (2k+ GitHub stars)
-- Strong communicator; comfortable presenting to executives
+- Created a web app to calculate ERC tax credits in Python
+- Developed web scrapers to gather information from various websites
+- Designed and developed Power BI reports for finance teams, operational teams, and executives
+
 
 NOT a fit for:
 - Pure frontend pixel-pushing with no product ownership
