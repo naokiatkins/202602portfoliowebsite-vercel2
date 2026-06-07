@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
     // ── 1. Upload raw PDF to Vercel Blob ─────────────────────────────────────
     const blobPath = `jd-uploads/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
     const blob = await put(blobPath, file, {
-      access: "private", // not publicly accessible
+      access: "public", // not publicly accessible
       contentType: "application/pdf",
     });
 
