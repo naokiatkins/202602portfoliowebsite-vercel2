@@ -2,7 +2,7 @@
 
 export default function HeroSection() {
   return (
-    <section className="min-h-screen flex flex-col justify-end pb-20 px-6 relative overflow-hidden">
+    <section className="min-h-screen flex flex-col justify-start pt-32 px-6 relative overflow-hidden">
       {/* Decorative line */}
       <div className="absolute top-0 right-12 bottom-0 w-px bg-ink/6 hidden md:block" />
 

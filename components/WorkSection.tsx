@@ -1,28 +1,28 @@
 const projects = [
   {
     year: "2024",
-    title: "Payments Platform Rebuild",
+    title: "Web App for ERC Tax Credit Calculation",
     role: "Lead Engineer",
     description:
-      "Re-architected a monolith processing $2M/day into an event-driven microservices system. Reduced p99 latency by 60%.",
-    tags: ["TypeScript", "Node.js", "Kafka", "PostgreSQL"],
+      "Designed and implemented a web application to calculate ERC tax credits for small businesses. Built the backend API, data processing pipeline, and frontend interface.",
+    tags: ["Python", "Flask", "Azure Blob Storage", "Azure SQL", "GitHub Actions"],
   },
-  {
-    year: "2023",
-    title: "Developer Analytics SaaS",
-    role: "Founding Engineer",
-    description:
-      "Built a B2B SaaS from scratch to $200k ARR. Designed the data pipeline, dashboard UI, and billing integration.",
-    tags: ["Next.js", "Python", "Stripe", "Clickhouse"],
-  },
-  {
-    year: "2022",
-    title: "Open-Source Component Library",
-    role: "Creator & Maintainer",
-    description:
-      "Shipped a design-system library for React. 2k+ GitHub stars, used by 300+ projects.",
-    tags: ["React", "TypeScript", "Storybook"],
-  },
+  // {
+  //   year: "2023",
+  //   title: "Developer Analytics SaaS",
+  //   role: "Founding Engineer",
+  //   description:
+  //     "Built a B2B SaaS from scratch to $200k ARR. Designed the data pipeline, dashboard UI, and billing integration.",
+  //   tags: ["Next.js", "Python", "Stripe", "Clickhouse"],
+  // },
+  // {
+  //   year: "2022",
+  //   title: "Open-Source Component Library",
+  //   role: "Creator & Maintainer",
+  //   description:
+  //     "Shipped a design-system library for React. 2k+ GitHub stars, used by 300+ projects.",
+  //   tags: ["React", "TypeScript", "Storybook"],
+  // },
 ];
 
 export default function WorkSection() {
