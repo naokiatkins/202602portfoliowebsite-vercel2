@@ -62,19 +62,18 @@ export default function Home() {
 }
 
 function CalendarEmbed({ token }: { token: string }) {
-  const baseUrl = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL;
+  const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL;
 
-  if (!baseUrl) {
+  if (!calendlyUrl) {
     return (
       <div className="mt-10 p-6 border border-ink/10 rounded text-center text-muted font-mono text-sm">
-        Set <code>NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL</code> in your{" "}
-        <code>.env.local</code> to show the calendar.
+        Set <code>NEXT_PUBLIC_CALENDLY_URL</code> in your env vars.
       </div>
     );
   }
 
-  // Append token to the calendar URL so it pre-fills the event description
-  const calUrl = `${baseUrl}&details=Booking+ref:+${token}`;
+  // Append token as a custom answer so you can identify who booked
+  const embedUrl = `${calendlyUrl}?a1=${token}`;
 
   return (
     <div className="mt-10 animate-fade-up">
@@ -85,11 +84,10 @@ function CalendarEmbed({ token }: { token: string }) {
         </p>
       </div>
       <iframe
-        src={calUrl}
-        className="calendar-frame w-full"
-        height="600"
+        src={embedUrl}
+        className="calendar-frame w-full rounded-sm"
+        height="700"
         title="Book a call"
-        allowFullScreen
       />
     </div>
   );
