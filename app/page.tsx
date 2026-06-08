@@ -12,7 +12,8 @@ export default function Home() {
     summary: string;
     skills: string[];
     gaps: string[];
-  } | null>(null);
+    token: string;
+} | null>(null);
 
   const threshold = Number(
     process.env.NEXT_PUBLIC_MATCH_THRESHOLD ?? 70
