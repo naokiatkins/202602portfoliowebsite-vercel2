@@ -7,6 +7,7 @@ interface AnalysisResult {
   summary: string;
   skills: string[];
   gaps: string[];
+  token: string; // ← add this
 }
 
 interface Props {

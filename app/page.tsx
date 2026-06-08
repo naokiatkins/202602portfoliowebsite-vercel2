@@ -43,9 +43,7 @@ export default function Home() {
 
           <JDGate onResult={setMatchResult} result={matchResult} />
 
-          {isHighMatch && (
-            <CalendarEmbed />
-          )}
+          {isHighMatch && <CalendarEmbed token={matchResult.token} />}
 
           {matchResult && !isHighMatch && (
             <LowMatchMessage score={matchResult.score} threshold={threshold} />
@@ -62,10 +60,10 @@ export default function Home() {
   );
 }
 
-function CalendarEmbed() {
-  const calUrl = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL;
+function CalendarEmbed({ token }: { token: string }) {
+  const baseUrl = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL;
 
-  if (!calUrl) {
+  if (!baseUrl) {
     return (
       <div className="mt-10 p-6 border border-ink/10 rounded text-center text-muted font-mono text-sm">
         Set <code>NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL</code> in your{" "}
@@ -73,6 +71,9 @@ function CalendarEmbed() {
       </div>
     );
   }
+
+  // Append token to the calendar URL so it pre-fills the event description
+  const calUrl = `${baseUrl}&details=Booking+ref:+${token}`;
 
   return (
     <div className="mt-10 animate-fade-up">

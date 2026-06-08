@@ -1,40 +1,38 @@
 import { NextRequest, NextResponse } from "next/server";
-import Anthropic from "@anthropic-ai/sdk";
 import { put } from "@vercel/blob";
-// import { sql } from "@vercel/postgres";
+import { neon } from "@neondatabase/serverless";
+import crypto from "crypto";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
 
-// ─── Your profile — edit this! ──────────────────────────────────────────────
 const MY_PROFILE = `
-NName: Naoki Atkins
-Title: Data Engineer & Business Intelligence Developer
-Years of experience: 5
+Name: Naoki Atkins
+Title: Senior Data Engineer / BI Developer
+Years of experience: 4
 
 Core skills:
-- Power BI, Python, R, SQL
-- Azure -> Blob Storage, Functions, Apps
-- RPA, Machine Learning
-- Software design, Software architecture
+- Python, SQL, TypeScript
+- Azure Databricks, dbt, Delta Lake
+- Medallion architecture (Bronze/Silver/Gold)
+- Azure DevOps, CI/CD pipelines
+- Power BI, data visualisation
+- Unity Catalog, Azure Data Factory
 
-Industries: Finance, Manufacturing
-Work style: remote-first, async, startup environments
+Industries: enterprise data platforms, analytics engineering
+Work style: remote-first, async, structured environments
 
 Highlights:
-- Created a web app to calculate ERC tax credits in Python
-- Developed web scrapers to gather information from various websites
-- Designed and developed Power BI reports for finance teams, operational teams, and executives
-
+- Built config-driven ingestion engine using YAML + Pydantic v2
+- Implemented dbt-databricks CI gate with schema tests
+- Designed medallion architecture across Unity Catalog environments
+- Strong communicator; comfortable working with stakeholders
 
 NOT a fit for:
-- Pure frontend pixel-pushing with no product ownership
-- Roles requiring on-site 5 days/week
+- Pure frontend or mobile roles
+- Roles with no data engineering component
 - Java or PHP-only stacks
 `;
-// ────────────────────────────────────────────────────────────────────────────
-
-const client = new Anthropic();
 
 export async function POST(req: NextRequest) {
   try {
@@ -60,7 +58,7 @@ export async function POST(req: NextRequest) {
     // ── 1. Upload raw PDF to Vercel Blob ─────────────────────────────────────
     const blobPath = `jd-uploads/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
     const blob = await put(blobPath, file, {
-      access: "public", // not publicly accessible
+      access: "public",
       contentType: "application/pdf",
     });
 
@@ -82,15 +80,10 @@ export async function POST(req: NextRequest) {
 
     if (jdText.length < 100) {
       return NextResponse.json(
-        {
-          error:
-            "PDF appears to be empty or image-only. Please use a text-based PDF.",
-        },
+        { error: "PDF appears to be empty or image-only. Please use a text-based PDF." },
         { status: 422 }
       );
     }
-
-    const truncatedJD = jdText.slice(0, 4000);
 
     // ── 3. Collect recruiter metadata ─────────────────────────────────────────
     const ip =
@@ -99,102 +92,54 @@ export async function POST(req: NextRequest) {
       "unknown";
     const userAgent = req.headers.get("user-agent") ?? "unknown";
 
-    // ── 4. Call Claude to score the match ─────────────────────────────────────
-//     const message = await client.messages.create({
-//       model: "claude-haiku-4-5-20251001",
-//       max_tokens: 600,
-//       messages: [
-//         {
-//           role: "user",
-//           content: `You are an expert recruiter and career coach. Analyse the fit between a candidate profile and a job description.
+    // ── 4. TEMPORARY: hardcoded result for testing ────────────────────────────
+    const score = 85;
+    const parsed = {
+      summary: "This is a placeholder result for testing purposes.",
+      matchedSkills: ["Python", "SQL", "dbt", "Azure Databricks"],
+      gaps: [] as string[],
+    };
+    // ── When ready: replace above with Claude API call ────────────────────────
 
-// <candidate_profile>
-// ${MY_PROFILE}
-// </candidate_profile>
+    // ── 5. Generate unique tracking token ─────────────────────────────────────
+    const token = crypto.randomBytes(16).toString("hex");
 
-// <job_description>
-// ${truncatedJD}
-// </job_description>
-
-// Respond with ONLY a valid JSON object — no markdown, no explanation:
-// {
-//   "score": <integer 0-100>,
-//   "summary": "<2-sentence honest assessment of the fit>",
-//   "matchedSkills": ["<skill>", ...],
-//   "gaps": ["<gap or concern>", ...]
-// }
-
-// Be objective. score=100 means perfect fit. score<50 means poor fit. score>=70 means worth a conversation.`,
-//         },
-//       ],
-//     });
-
-//     const rawText =
-//       message.content[0].type === "text" ? message.content[0].text : "";
-
-//     let parsed: {
-//       score: number;
-//       summary: string;
-//       matchedSkills: string[];
-//       gaps: string[];
-//     };
-
-//     try {
-//       const clean = rawText.replace(/```json|```/g, "").trim();
-//       parsed = JSON.parse(clean);
-//     } catch {
-//       console.error("Claude response was not valid JSON:", rawText);
-//       return NextResponse.json(
-//         { error: "Analysis failed. Please try again." },
-//         { status: 500 }
-//       );
-//     }
-
-//     const score = Math.min(100, Math.max(0, Math.round(parsed.score)));
-
-
-
-// ── TEMPORARY: hardcoded result for testing ──────────────────────────
-const score = 85;
-const parsed = {
-  summary: "This is a placeholder result for testing purposes.",
-  matchedSkills: ["TypeScript", "React", "Node.js"],
-  gaps: [],
-};
-// ────────────────────────────────────────────────────────────────────
-
-    // ── 5. Persist to Vercel Postgres ─────────────────────────────────────────
-    // await sql`
-    //   INSERT INTO jd_submissions (
-    //     filename,
-    //     blob_url,
-    //     extracted_text,
-    //     score,
-    //     summary,
-    //     matched_skills,
-    //     gaps,
-    //     ip_address,
-    //     user_agent,
-    //     submitted_at
-    //   ) VALUES (
-    //     ${file.name},
-    //     ${blob.url},
-    //     ${jdText.slice(0, 10000)},
-    //     ${score},
-    //     ${parsed.summary ?? ""},
-    //     ${JSON.stringify(parsed.matchedSkills ?? [])},
-    //     ${JSON.stringify(parsed.gaps ?? [])},
-    //     ${ip},
-    //     ${userAgent},
-    //     NOW()
-    //   )
-    // `;
+    // ── 6. Persist to Neon Postgres ───────────────────────────────────────────
+    const sql = neon(process.env.POSTGRES_URL!);
+    await sql`
+      INSERT INTO jd_submissions (
+        token,
+        filename,
+        blob_url,
+        extracted_text,
+        score,
+        summary,
+        matched_skills,
+        gaps,
+        ip_address,
+        user_agent,
+        submitted_at
+      ) VALUES (
+        ${token},
+        ${file.name},
+        ${blob.url},
+        ${jdText.slice(0, 10000)},
+        ${score},
+        ${parsed.summary},
+        ${JSON.stringify(parsed.matchedSkills)},
+        ${JSON.stringify(parsed.gaps)},
+        ${ip},
+        ${userAgent},
+        NOW()
+      )
+    `;
 
     return NextResponse.json({
       score,
-      summary: parsed.summary ?? "",
-      skills: parsed.matchedSkills ?? [],
-      gaps: parsed.gaps ?? [],
+      summary: parsed.summary,
+      skills: parsed.matchedSkills,
+      gaps: parsed.gaps,
+      token,
     });
   } catch (err) {
     console.error("API error:", err);

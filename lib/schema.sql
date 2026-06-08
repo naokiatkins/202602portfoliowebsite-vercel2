@@ -3,6 +3,7 @@
 
 CREATE TABLE IF NOT EXISTS jd_submissions (
   id              SERIAL PRIMARY KEY,
+  token           TEXT NOT NULL UNIQUE,
   filename        TEXT NOT NULL,
   blob_url        TEXT NOT NULL,
   extracted_text  TEXT,
@@ -15,6 +16,8 @@ CREATE TABLE IF NOT EXISTS jd_submissions (
   submitted_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- Index for quick sorting by date
 CREATE INDEX IF NOT EXISTS idx_jd_submissions_submitted_at
   ON jd_submissions (submitted_at DESC);
+
+CREATE INDEX IF NOT EXISTS idx_jd_submissions_token
+  ON jd_submissions (token);
