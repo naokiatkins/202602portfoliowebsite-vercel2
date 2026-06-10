@@ -44,7 +44,11 @@ export default function Home() {
 
           <JDGate onResult={setMatchResult} result={matchResult} />
 
-          {isHighMatch && <CalendarEmbed token={matchResult.token} />}
+          {isHighMatch && (
+    <div className="max-w-4xl mx-auto mt-10">
+      <CalendarEmbed token={matchResult.token} />
+    </div>
+  )}
 
           {matchResult && !isHighMatch && (
             <LowMatchMessage score={matchResult.score} threshold={threshold} />
